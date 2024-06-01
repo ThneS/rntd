@@ -26,7 +26,12 @@ pub struct Frame {
     l: u64,
     v: String, // JsonString(Event)
 }
-
+impl Frame {
+    #[allow(unused)]
+    pub fn new(t: u64, l: u64, v: String) -> Self {
+        Frame { t, l, v }
+    }
+}
 pub struct FrameCodec;
 
 impl Encoder<Frame> for FrameCodec {
