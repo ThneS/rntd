@@ -4,8 +4,15 @@
 mod center;
 mod collector;
 mod tools;
+use collector::collector_run;
+use tracing::info;
 
-fn main() {
-    println!("Hello, world!");
-    println!("Hello, world!");
+#[tokio::main]
+async fn main() {
+    tracing_subscriber::fmt::init();
+    info!("start collector");
+    collector_run().await;
+    loop {
+        std::thread::park();
+    }
 }
