@@ -11,7 +11,7 @@ use tokio_util::codec::{Decoder, Encoder};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum Event {
+pub enum EventFrame {
     SimpleEvent {
         task_id: u64,
         alarm_id: u64,
@@ -101,7 +101,7 @@ mod tests {
     }
     #[test]
     fn event_encode() {
-        let event = Event::SimpleEvent {
+        let event = EventFrame::SimpleEvent {
             task_id: 1,
             alarm_id: 2,
             msg: "hello".to_string(),
@@ -116,7 +116,7 @@ mod tests {
         let event_json = r#"{"task_id":1,"alarm_id":2,"msg":"hello"}"#;
         let event_json_decode = serde_json::from_str(event_json).unwrap();
         match event_json_decode {
-            Event::SimpleEvent {
+            EventFrame::SimpleEvent {
                 task_id,
                 alarm_id,
                 msg,

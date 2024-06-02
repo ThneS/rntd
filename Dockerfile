@@ -5,5 +5,6 @@ FROM postgres:16.3
 ENV POSTGRES_USER=ntd
 ENV POSTGRES_PASSWORD=ntd
 ENV POSTGRES_DB=ntd
+COPY ./conf/sql/* /docker-entrypoint-initdb.d/
 EXPOSE 5432
 CMD ["postgres"]

@@ -1,4 +1,6 @@
 //! tcp server
+mod wiki;
+use crate::tools::try_new_pool;
 #[allow(unused_imports)]
 use crate::tools::{Event, Frame, FrameCodec};
 use bytes::BytesMut;
@@ -74,6 +76,8 @@ async fn handler(mut conn: Connection) {
 }
 
 pub async fn collector_run() {
+    let pool = try_new_pool().await.unwrap();
+    wiki::wiki_update(pool.clone()).await;
     tokio::spawn(start());
 }
 
