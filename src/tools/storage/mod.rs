@@ -32,7 +32,7 @@ pub struct Wiki {
     module: String,
     sub_module: String,
     create_time: NaiveDateTime,
-    update_time: NaiveDateTime,
+    update_time: Option<NaiveDateTime>,
     enable: bool,
 }
 
