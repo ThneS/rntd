@@ -9,7 +9,7 @@ use sqlx::{
     postgres::{PgPool, PgPoolOptions},
     prelude::FromRow,
 };
-use std::ops::Deref;
+use std::{ops::Deref, time::Duration};
 pub struct Storage;
 
 #[derive(Clone)]
@@ -67,7 +67,10 @@ impl Storage {
 
 pub async fn try_new_pool() -> Result<StoragePool, sqlx::Error> {
     let inner = PgPoolOptions::new()
-        .connect("postgresql://ntd:ntd@localhost:5432/ntd")
-        .await?;
+        .max_connections(5)
+        .acquire_timeout(Duration::from_secs(3))
+        .connect("ntd:ntd@localhost:5432/ntd")
+        .await
+        .expect("can't connect to database");
     Ok(StoragePool { inner })
 }
